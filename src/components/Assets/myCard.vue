@@ -42,7 +42,7 @@
 		data(){
 			return{
 				topHeader:{
-					title:'我的卡片',
+					title:'我的矿机',
 					isReturn:true,
 					rtnRouter:'/assets'
 				},

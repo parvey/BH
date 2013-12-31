@@ -24,7 +24,8 @@
 							<span class="t">奖励：</span>
 							<span class="c">{{item.income + '%'}}</span>
 						</div>
-						<div class="btn" :class="getStatusClass(item.status)" @click="handleClickAction(item)">{{getStatus(item.status)}}</div>		
+						<!-- <div class="btn" :class="getStatusClass(item.status)" @click="handleClickAction(item)">{{getStatus(item.status)}}</div>		 -->
+						<div class="btn buy" @click="handleClickAction(item)">购买</div>
 					</li>
 				</ul>
 
@@ -153,41 +154,23 @@
 				return obj.class
 			},
 			handleClickAction(item){
-				if(item.status == 0){
-					//预约
-					if(isCert()){
-						getProjectReserveApi({
-							project_id:item.project_id
-						}).then((res)=>{
-							if(res.code == 1){
-								this.$vux.toast.text('预约成功')
-								this.getData()
-							}else{
-								this.$vux.toast.text(res.message)
-							}
-						}).catch(()=>{
-							
-						})
-					}
-				}else if(item.status == 2){
-					if(isCert()){
-						this.$vux.loading.show()
-						
-						orderBuyApi({
-							project_id:item.project_id
-						}).then((res)=>{
-							if(res.code == 1){
-								this.$vux.toast.text('恭喜您，购买成功')
-								this.getData()
-							}else{
-								this.$vux.toast.text(res.message)
-							}
-							this.$vux.loading.hide()
-						}).catch(()=>{
-							this.$vux.loading.hide()
-						})
+				if(isCert()){
+					this.$vux.loading.show()
+					
+					orderBuyApi({
+						project_id:item.project_id
+					}).then((res)=>{
+						if(res.code == 1){
+							this.$vux.toast.text('恭喜您，购买成功')
+							this.getData()
+						}else{
+							this.$vux.toast.text(res.message)
+						}
+						this.$vux.loading.hide()
+					}).catch(()=>{
+						this.$vux.loading.hide()
+					})
 
-					}
 				}
 			}
 		},

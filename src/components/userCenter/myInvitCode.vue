@@ -4,8 +4,8 @@
 		<div class="myInvit-container">
 			<div class="myInvit-contain">
 				<img :src="logo" alt="" class="logo" />
-				<div class="c1">大玩家</div>
-				<div class="c2">快来大玩家赚QC</div>
+				<div class="c1">善盾</div>
+				<div class="c2">注册并认证即可成为慈善大使</div>
 				<div id="qrcode">
 					<vue-qr :text="invitUrl" :size="200" :margin="0" :dotScale="1"></vue-qr>
 				</div>
@@ -15,8 +15,8 @@
 					<input type="text" class="text" :value="invitUrl"/>
 					<div class="btn" :data-clipboard-text="invitUrl" @click="copy">复制链接</div>
 				</div>
-				<div class="c6" @click="downloadFile">邀请玩家</div>
-				<div class="c7">说明：点击邀请玩家按钮可以保存图片二维码，然后把二维码图片分享邀请会员</div>
+				<div class="c6" @click="downloadFile">邀请</div>
+				<div class="c7">说明：点击邀请按钮可以保存图片二维码，然后把二维码图片分享邀请会员</div>
 			</div>		
 		</div>
 	</div>
@@ -37,7 +37,7 @@
 		data(){
 			return{
 				topHeader:{
-					title:'邀请玩家',
+					title:'邀请',
 					isReturn:true,
 					rtnRouter:'/userCenter'
 				},

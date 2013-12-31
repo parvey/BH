@@ -114,7 +114,7 @@
 						type:true
 					},
 					{
-						name:'持有卡片',
+						name:'我的矿机',
 						icon:require('@/assets/images/content/assets-2.png'),
 						path:'/myCard',
 						type:true
