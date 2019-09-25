@@ -1,5 +1,5 @@
 <template>
-	<div class="login-container">
+	<div class="login-container login-container2">
 		<topHeader ref="topHeader" :data="{title:'会员注册',isReturn:true,rtnRouter:'/login'}"></topHeader>
 		<div class="login-wrap reg-wrap">
 			<group class="login-box">

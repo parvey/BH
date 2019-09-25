@@ -2,7 +2,7 @@
 	<div>
 		<div class="footer-cl"></div>
 		<div style="width:100%;position:fixed;bottom:0px;left:0px;z-index:10;">
-			<tabbar style="background:#1a1a3d" v-model="selected">
+			<tabbar style="background:#fff" v-model="selected">
 				<tabbar-item v-for="item in tabbarList" :key="item.id" :link="item.path">
 					<img slot="icon" :src="item.icon">
 					<img slot="icon-active" :src="item.curIcon">
@@ -71,5 +71,5 @@
 	}
 </script>
 <style lang="less">
-	.weui-tabbar__item.weui-bar__item_on .weui-tabbar__label{color:#0679fc !important;}
+	.weui-tabbar__item.weui-bar__item_on .weui-tabbar__label{color:#e50007 !important;}
 </style>

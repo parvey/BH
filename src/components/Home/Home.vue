@@ -42,7 +42,6 @@
 	import {Swiper,SwiperItem} from 'vux'
 	import topHeader from '@/components/public/header.vue'
 	import tabbar from '@/components/public/tabbar.vue'
-	import echarts from 'echarts'
 
 	export default{
 		components:{
@@ -79,9 +78,9 @@
 		},
 		created(){
 			this.userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
-			this.indexBanner();
-			this.getBulletinList()
-			this.getIndexNews();
+			//this.indexBanner();
+			//this.getBulletinList()
+			//this.getIndexNews();
 		},
 		methods:{
 			//banner
