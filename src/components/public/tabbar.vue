@@ -68,8 +68,11 @@
 				if(obj) this.selected = parseInt(obj.id)
 			}
 		}
-	}
+	};
 </script>
 <style lang="less">
+	.weui-tabbar{box-shadow:0px 0px 2px rgba(0,0,0,.2)}
 	.weui-tabbar__item.weui-bar__item_on .weui-tabbar__label{color:#e50007 !important;}
+	.weui-tabbar__label{font-size:12px !important;}
+	.weui-tabbar:before{display:none;}
 </style>

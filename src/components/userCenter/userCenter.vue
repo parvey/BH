@@ -1,29 +1,21 @@
 <template>
 	<div>
 		<topHeader ref="topHeader" :data="topHeader"></topHeader>
-		<div class="userCenter-container">
-			<div class="userCenter-top">
-				<img :src="userInfo.avatar" alt="" class="avatar" />
-				<div class="nickName">{{userInfo.name == "" ? '匿名' : userInfo.name}}</div>
-				<div class="phone">{{userInfo.mobile}}</div>
-				<div class="balance">我的QC：{{userInfo.usdt_amount}}</div>
-				 <div v-if="userInfo.is_activate == 1">已激活</div>
-				<x-button type="warn" action-type="reset" class="btn" mini v-else @click.native="handleActivate">激活</x-button>
-			</div>
-			<div class="usercenter-wallet">
-				<div class="top">我的钱包</div>
-				<div class="type">转入ETH地址：</div>
-				<div class="adress" :data-clipboard-text="userInfo.usdt_recharge_address" @click="copy">{{userInfo.usdt_recharge_address == '' ? '暂无ETH地址' : userInfo.usdt_recharge_address}}</div>
-				<div style="font-size:12px;margin:3px 0 0 0;">当前兑换比例：1ETH = {{eth}}QC</div>
-			</div>
-			<ul class="usercenter-list">
-				<li v-for="item in navList" :key="item.id" @click="goPath(item.path)">
-					<img :src="item.icon" alt="" class="icon"/>
-					<div class="name">{{item.name}}</div>
-				</li>
-			</ul>
-			<div class="usercenter-exit" @click="isLoginOut = true">退出</div>
+		
+		<div class="userCenter-top">
+			<i class="icon"></i>
+			<div class="nickName">+8613537721129</div>
+			<div class="ID">BH ID:684840474</div>
 		</div>
+
+		<ul class="userCenter-nav">
+			<li>
+				<i></i>
+			</li>
+		</ul>
+		
+
+
 		<tabbar ref="tabbar"></tabbar>
 
 		<confirm
@@ -65,7 +57,7 @@
 					isReturn:false,
 					rtnRouter:''
 				},
-				userInfo:'',
+				userInfo:{},
 				navList:[
 					{
 						id:8,
@@ -152,9 +144,9 @@
 			}
 		},
 		created(){
-			this.getUserInfo();
+			//this.getUserInfo();
 			this.userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
-			this.sysGePrice();
+			//this.sysGePrice();
 		},
 		methods:{
 			//登出
@@ -210,5 +202,20 @@
 				})
 			}
 		}
-	}
+	};
 </script>
+<style lang="less">
+	.userCenter-top{padding:.54rem 0 .54rem .35rem;background:#fff;position:relative;overflow:hidden;}
+	.userCenter-top .icon{display:block;width:.9rem;height:.9rem;border-radius:100%;background:url('../../assets/images/logo.png') no-repeat center center / cover;float:left;margin:0 .27rem 0 0;}
+	.userCenter-top .nickName{line-height:.37rem;font-weight:600;font-size:.26rem;color:#000;margin:.13rem 0 0 0;}
+	.userCenter-top .ID{line-height:.32rem;color:#817f80;font-size:.22rem;}
+
+	.userCenter-nav{
+		li{
+			i{
+				display:block;width:.38rem;height:.38rem;background:url(../../assets/images/test/nav.png) no-repeat center center / cover;
+			}
+		}
+	}
+
+</style>
