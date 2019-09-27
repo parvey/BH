@@ -38,6 +38,11 @@ let routes = [
 		path:'/paymentCode',
 		name:'收款码',
 		component: (resolve) => require(['./components/Assets/paymentCode.vue'], resolve)
+	},
+	{
+		path:'/myCard',
+		name:'持有卡片',
+		component: (resolve) => require(['./components/Assets/myCard.vue'], resolve)
 	}
   ]
 

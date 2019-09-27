@@ -126,7 +126,7 @@
 					{
 						name:'持有卡片',
 						icon:require('@/assets/images/content/assets-2.png'),
-						path:''
+						path:'/myCard'
 					},
 					{
 						name:'生息宝',
