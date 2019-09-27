@@ -1,9 +1,6 @@
 <template>
 	<div>
-		<div>
-			<x-header :title="topHeader.title" :left-options="{showBack:topHeader.isReturn,preventGoBack:topHeader.isReturn,backText:''}" style='width:100%;background-color:#e60012;position:fixed;top:0px;left:0px;z-index:99'></x-header>
-			<div class="header-cl"></div>
-		</div>
+		<topHeader ref="topHeader" :data="topHeader"></topHeader>
 
 		<div class="assets-container" ref="scroller">
 			<vue-scroll :ops="ops" ref="vs" @refresh-start="getData">
@@ -81,7 +78,7 @@
 <script>
 	import {} from '@/api'
 	import {XHeader} from 'vux'
-	import topHeader from '@/components/public/header.vue'
+	import topHeader from '@/components/public/header2.vue'
 	import tabbar from '@/components/public/tabbar.vue'
 
 	export default{
@@ -250,7 +247,5 @@
 		}
 	}
 
-	.assets-container /deep/ .__vuescroll .__panel .__refresh, 
-	.assets-container /deep/ .__vuescroll .__panel .__load{color:#fff !important;}
 
 </style>

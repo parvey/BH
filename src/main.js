@@ -13,6 +13,7 @@ import {LoadingPlugin,AlertPlugin,ToastPlugin} from 'vux' //vux全局组件
 import JsEncrypt from 'jsencrypt'; //RSA加密
 import VueAwesomeSwiper from 'vue-awesome-swiper' //轮播
 import vuescroll from 'vuescroll';//滚动条
+import './assets/js/common'
 
 Vue.config.productionTip = false
 Vue.use(VueRouter);
