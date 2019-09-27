@@ -35,7 +35,7 @@
 					{
 						id:'1',
 						name:'资产',
-						path:'/Star',
+						path:'/assets',
 						icon:require('@/assets/images/tabbar/star-1.png'),
 						curIcon:require('@/assets/images/tabbar/star-2.png'),
 					},

@@ -7,11 +7,12 @@ import axios from 'axios'
 import qs from 'qs'
 import store from './store/store'
 import './assets/css/common.less'
-import {AlertPlugin,ToastPlugin} from 'vux' //vux全局组件
+import {LoadingPlugin,AlertPlugin,ToastPlugin} from 'vux' //vux全局组件
 //import ElementUI from 'element-ui'; //element-ui
 //import 'element-ui/lib/theme-chalk/index.css';
 import JsEncrypt from 'jsencrypt'; //RSA加密
 import VueAwesomeSwiper from 'vue-awesome-swiper' //轮播
+import vuescroll from 'vuescroll';//滚动条
 
 Vue.config.productionTip = false
 Vue.use(VueRouter);
@@ -21,6 +22,9 @@ Vue.use(Vuex); //引入状态管理
 //注册vux插件
 Vue.use(AlertPlugin);
 Vue.use(ToastPlugin);
+Vue.use(LoadingPlugin);
+
+Vue.use(vuescroll)
 
 //注册ElementUi组件
 //Vue.use(ElementUI);

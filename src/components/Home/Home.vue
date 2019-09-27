@@ -6,17 +6,19 @@
 			<div class="market-theader">名称/最新价/涨跌幅</div>
 			<div class="market-cl"></div>
 			<div class="market-tbody">
-				<ul>
-					<li v-for="(item,index) in 20" :key="index">
-						<i class="icon" :style="{backgroundImage:'url('+icon+')'}"></i>
-						<div class="coin">
-							<span>YBT</span>/
-							<span class="unit">USDT</span>
-						</div>
-						<div class="price">$4.13</div>
-						<div class="trend rise">+1.069%</div>
-					</li>
-				</ul>
+				<vue-scroll :ops="ops" ref="vs" @refresh-start="getData"> 
+					<ul>
+						<li v-for="(item,index) in 20" :key="index">
+							<i class="icon" :style="{backgroundImage:'url('+icon+')'}"></i>
+							<div class="coin">
+								<span>YBT</span>/
+								<span class="unit">USDT</span>
+							</div>
+							<div class="price">$4.13</div>
+							<div class="trend rise">+1.069%</div>
+						</li>
+					</ul>
+				</vue-scroll>
 			</div>
 		</div>
 
@@ -47,151 +49,57 @@
 					rtnRouter:''
 				},
 				userInfo:'',
-				newsList:[],			
-				bannerList:[
-				/*
-					{
-						url:'javascript:;',
-						img:require('@/assets/images/banner/index-bnr1.jpg'),
-						title:''
+				ops:{
+					vuescroll:{
+						mode:'slide',
+						pullRefresh:{
+							enable:true,
+							auto:true,
+							tips:{								
+						        deactive: '下拉刷新',
+						        active: '释放刷新',
+						        start: '',
+						        beforeDeactive: '刷新成功'
+							}
+						},
+						pushLoad:{
+							enable:false
+						}
 					},
-					{
-						url:'javascript:;',
-						img:require('@/assets/images/banner/index-bnr1.jpg'),
-						title:''
+					bar:{
+						background:'#00000',
+						opacity:0
 					}
-					*/
-				],
-				BulletinList:[]
+				}
 			}
 		},
 		created(){
 			this.userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
-			//this.indexBanner();
-			//this.getBulletinList()
-			//this.getIndexNews();
+			this.getData()
 		},
 		methods:{
-			//banner
-			indexBanner(){
-				indexBannerApi({}).then((res)=>{
-					if(res.code === 1){
-						this.bannerList = res.data.list
+			getData(vsInstance, refreshDom, done){
+				if(!done){
+					this.$vux.loading.show({
+					 text: ''
+					})
+				}
+				setTimeout(()=>{
+					console.log('1')
+					if(done){
+						done()
+					}else{
+						this.$vux.loading.hide()
 					}
-				}).catch(()=>{})
-			},
-			//获取新闻
-			getIndexNews(){
-				getIndexNewsApi({
-
-				}).then((res)=>{
-					if(res.code === 1){
-						this.newsList = res.data.list
-					}
-				}).catch(()=>{})
-			},
-			//价格走势
-			initChart(){
-				getIndexPricerendApi({}).then((res)=>{
-					if(res.code == 1){
-						let dateList = [],
-							dataList = [];
-						for(var i in res.data){
-							dateList.push(res.data[i].date);
-							dataList.push(parseInt(res.data[i].price));
-						}
-						var priceChart = echarts.init(document.getElementById('priceChart'))
-						priceChart.setOption({
-							xAxis: {
-								type: 'category',
-								boundaryGap: false,
-								splitLine:{
-									show:false
-								},
-								data:dateList,
-								axisLabel:{
-									interval:0,
-									textStyle:{
-										color:'#bababa',
-										fontSize:10
-									}
-								}
-							},
-							yAxis: {
-								min:(Math.min.apply(null, dataList) - 0.2000).toFixed(2),
-								max:(Math.max.apply(null, dataList) + 0.2000).toFixed(2),
-								type: 'value',
-								splitLine:{
-									show:false
-								},
-								axisLabel:{
-									textStyle:{
-										color:'#bababa'
-									}
-								}
-							},
-						    grid: {
-						        left: '0',
-						        right: '18',
-						        bottom: '0',
-						        top:'20',
-						        containLabel: true
-						    },
-							series:[
-								{
-									type:'line',
-									itemStyle: {
-										normal: {
-											color: 'rgba(2,141,198,1)'
-										}
-									},
-									areaStyle: {
-										normal: {
-											color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-												offset: 0,
-												color: 'rgba(255,255,255,0.2)'
-											}, {
-												offset: 1,
-												color: 'rgba(2,141,198,.8)'
-											}])
-										}
-									},
-						            label: {
-						                normal: {
-						                    show: true,
-						                    position: 'top'
-						                }
-						            },
-									data:dataList
-								}
-							]
-						})
-					}
-				}).catch(()=>{
-
-				})
-			},
-			//公告列表
-			getBulletinList(){
-				getBulletinListApi({}).then((res)=>{
-					if(res.code === 1){
-						this.BulletinList = res.data.list
-					}
-				}).catch(()=>{
-
-				})
-			},
-			//跳转公告详情
-			goBulletinDtl(item){
-				this.$router.push({path:'/BulletinDtl',query:{id:item.info_id,title:item.title}});
+				},1000)
 			}
 		},
 		mounted(){
-			//价格走势		
-			//this.initChart();
-			console.log('1')
-			console.log()
 			document.querySelector('.market-tbody').style.height = document.querySelector('body').offsetHeight - document.querySelector('.market-top').offsetHeight - document.querySelector('.market-theader').offsetHeight - 99 + 'px'
+
+
+			//初始化获取数据
+			//this.$refs['vs'].triggerRefreshOrLoad('refresh');
 
 		}
 	};
@@ -202,6 +110,7 @@
 	.market-theader{width:100%;padding:.12rem 0 0 .35rem;line-height:.64rem;color:#ada9aa;font-size:.22rem;}
 	// .market-cl{display:block;height:1.38rem;}
 	.market-tbody{
+		position:relative;
 		overflow-x:hidden;
 		overflow-y:auto;
 		ul{
