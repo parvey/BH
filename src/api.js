@@ -141,3 +141,10 @@ export const getGameListApi = params => { return axios.post( API_ROOT + 'game/',
 //首页行情
 //export const getIndexMarketApi = params => { return axios.post( API_ROOT + 'index/market/', qs.stringify(params));};
 export const getIndexMarketApi = params => { return axios.get( API_ROOT + 'index/market/'); };
+
+//游戏列表
+export const getProjectIndexApi = params => { return axios.get( API_ROOT + 'project/index/'); };
+
+//游戏列表- 预约
+//export const getProjectReserveApi = params => { return axios.get( API_ROOT + 'reserve/index/'); };
+export const getProjectReserveApi = params => { return axios.post( API_ROOT + 'reserve/index/', qs.stringify(params));};

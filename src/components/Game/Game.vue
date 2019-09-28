@@ -2,80 +2,28 @@
 	<div>
 		<topHeader ref="topHeader" :data="topHeader"></topHeader>
 		<div class="scroller" ref="scroller">
-			<vue-scroll :ops="ops" ref="vs" @refresh-start="getData"> 
+			<vue-scroll :ops="ops" ref="vs" @refresh-start="getData" @refresh-before-deactivate="handleBeforeDeactivate"> 
 				
 				<ul class="game-list clearfix">
-					<li>
-						<img :src="ceshi.pic" alt="" class="pic">
+					<li v-for="(item,index) in dataList" :key="index">
+						<img :src="item.icon" alt="" class="pic">
 						<div class="b">
 							<span class="t">价格：</span>
-							<span class="c">1000矿石</span>
-							<!-- <span>{{item.price}}</span> -->
+							<span class="c">{{item.price + ' QC'}}</span>
 						</div>
 						<div class="b">
 							<span class="t">剩余数量：</span>
-							<span class="c">10</span>
-							<!-- <span>{{item.surplus}}</span> -->
+							<span class="c">{{item.surplus}}</span>
 						</div>
 						<div class="b">
 							<span class="t">周期：</span>
-							<span class="c">7天</span>
-							<!-- <span>{{item.cycle}}</span> -->
+							<span class="c">{{item.cycle + '天'}}</span>
 						</div>
 						<div class="b">
 							<span class="t">奖励：</span>
-							<span class="c">15%</span>
-							<!-- <span>{{item.income}}</span> -->
+							<span class="c">{{item.income + '%'}}</span>
 						</div>
-						<div class="btn disabled">繁殖中</div>						
-					</li>
-					<li>
-						<img :src="ceshi.pic" alt="" class="pic">
-						<div class="b">
-							<span class="t">价格：</span>
-							<span class="c">1000矿石</span>
-							<!-- <span>{{item.price}}</span> -->
-						</div>
-						<div class="b">
-							<span class="t">剩余数量：</span>
-							<span class="c">10</span>
-							<!-- <span>{{item.surplus}}</span> -->
-						</div>
-						<div class="b">
-							<span class="t">周期：</span>
-							<span class="c">7天</span>
-							<!-- <span>{{item.cycle}}</span> -->
-						</div>
-						<div class="b">
-							<span class="t">奖励：</span>
-							<span class="c">15%</span>
-							<!-- <span>{{item.income}}</span> -->
-						</div>
-						<div class="btn buy">领养</div>						
-					</li>
-					<li v-for="item in 10" :key="item">
-						<img :src="ceshi.pic" alt="" class="pic">
-						<div class="b">
-							<span class="t">价格：</span>
-							<span class="c">1000矿石</span>
-							<!-- <span>{{item.price}}</span> -->
-						</div>
-						<div class="b">
-							<span class="t">剩余数量：</span>
-							<span class="c">10</span>
-							<!-- <span>{{item.surplus}}</span> -->
-						</div>
-						<div class="b">
-							<span class="t">周期：</span>
-							<span class="c">7天</span>
-							<!-- <span>{{item.cycle}}</span> -->
-						</div>
-						<div class="b">
-							<span class="t">奖励：</span>
-							<span class="c">15%</span>
-							<!-- <span>{{item.income}}</span> -->
-						</div>
-						<div class="btn order">预约</div>						
+						<div class="btn" :class="getStatusClass(item.status)" @click="handleClickAction(item)">{{getStatus(item.status)}}</div>		
 					</li>
 				</ul>
 
@@ -86,7 +34,7 @@
 </template>
 
 <script>
-	import {getGameListApi} from '@/api'
+	import {getProjectIndexApi,getProjectReserveApi} from '@/api'
 	import {} from 'vux'
 	import topHeader from '@/components/public/header.vue'
 	import tabbar from '@/components/public/tabbar.vue'
@@ -126,13 +74,37 @@
 						opacity:0
 					}
 				},
-				ceshi:{
-					pic:require('@/assets/images/test/game-1.jpg')
-				}
+				statusList:[
+					{
+						id:0,
+						name:'预约',
+						class:'order'
+					},
+					{
+						id:1,
+						name:'已预约',
+						class:'disabled'
+					},
+					{
+						id:2,
+						name:'领养',
+						class:'buy'
+					},
+					{
+						id:3,
+						name:'已领养',
+						class:'disabled'
+					},
+					{
+						id:4,
+						name:'繁殖中',
+						class:'disabled'
+					}
+				]
 			}
 		},
 		created(){
-			//this.getData()
+			this.getData()
 		},
 		methods:{
 			//给scroll赋值高度
@@ -147,29 +119,55 @@
 					 text: ''
 					})
 				}
-				setTimeout(()=>{
-					console.log('1')
-					if(done){
-						done()
-					}else{
-						this.$vux.loading.hide()
-					}
-				},1000)
-			},
-			getGameList(){
-				getGameListApi({}).then((res)=>{
-					if(res.code === 1){
-						this.dataList = res.data;
+				getProjectIndexApi({
+
+				}).then((res)=>{
+					if(res.code == 1){
+						this.dataList = res.data.list
+						if(done){
+							setTimeout(()=>{
+								done()
+							},500)
+						}else{
+							this.$vux.loading.hide()
+						}
 					}
 				}).catch(()=>{
 
 				})
 			},
-			goToplay(row){
-				this.$router.push({path:'/GameDtl',query:{item:JSON.stringify({
-					name:row.name,
-					url:row.url
-				})}});
+			handleBeforeDeactivate(vm, refreshDom, done){
+				setTimeout(() => {
+					done();
+				},500);
+			},
+			getStatus(id){
+				let obj = this.statusList.find((item)=>{
+					return item.id == id
+				})
+				return obj.name
+			},
+			getStatusClass(id){
+				let obj = this.statusList.find((item)=>{
+					return item.id == id
+				})
+				return obj.class
+			},
+			handleClickAction(item){
+				if(item.status == 0){
+					getProjectReserveApi({
+						project_id:item.project_id
+					}).then((res)=>{
+						if(res.code == 1){
+							this.$vux.toast.text('预约成功')
+							this.$refs['vs'].triggerRefreshOrLoad('refresh');
+						}else{
+							this.$vux.toast.text(res.message)
+						}
+					}).catch(()=>{
+						
+					})
+				}
 			}
 		},
 		mounted(){

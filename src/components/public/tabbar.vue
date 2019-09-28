@@ -42,7 +42,7 @@
 					{
 						id:'2',
 						name:'游戏',
-						path:'/Game',
+						path:'/game',
 						icon:require('@/assets/images/tabbar/game-1.png'),
 						curIcon:require('@/assets/images/tabbar/game-2.png'),
 					},
