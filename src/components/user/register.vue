@@ -76,7 +76,7 @@
 		methods:{
 			getCode(){
 				if(!this.$refs.userName.valid){
-					this.$message.error('请输入正确的手机号码')
+					this.$vux.toast.text('请输入正确的手机号码')
 					return false;
 				}
 				if(!this.loginForm.isCountDown){
@@ -87,7 +87,7 @@
 						type:'1'
 					}).then((res)=>{
 						if(res.code === 1){
-							this.$message.success('验证码发送成功');
+							this.$vux.toast.text('验证码发送成功');
 							let total = 60;
 							let countDownInterval = setInterval(()=>{
 								this.loginForm.countDown = total--
@@ -98,7 +98,7 @@
 								}
 							},1000)
 						}else{
-							this.$message.error(res.message)
+							this.$vux.toast.text(res.message)
 							this.loginForm.isCountDown = false;
 						}
 					}).catch(()=>{})
@@ -136,10 +136,10 @@
 					}).then((res)=>{
 						console.log(res)
 						if(res.code == 1){
-							this.$message.success('恭喜您，注册成功！');
+							this.$vux.toast.text('恭喜您，注册成功！');
 							router.push({path:'/login'});
 						}else{
-							this.$message.error(res.message)
+							this.$vux.toast.text(res.message)
 						}
 						this.loading = false;
 					}).catch(()=>{
@@ -148,7 +148,7 @@
 
 				}else{
 					//this.isError = true;
-					this.$message.error(this.errorMsg)
+					this.$vux.toast.text(this.errorMsg)
 				}
 			}
 		}

@@ -113,29 +113,29 @@ let routePath = [];
 })(routes);
 
 //路由跳转前的判断
-// router.beforeEach((to, from, next) => {
-// 	let toPath = to.path;
-// 	let user = JSON.parse(sessionStorage.getItem('token'));//是否登录
-// 	if(!user){
-// 		if(toPath == '/login' || toPath == '/register' || toPath == '/resetPassword'){
-// 			next();
-// 			return false;
-// 		}else{
-// 			next({path: '/login'})
-// 		}
-// 	}else if(user){
-// 		if(toPath == '/login' || toPath == '/register' || toPath == '/resetPassword'){ //跳转后登出的页面
-// 			sessionStorage.removeItem('token');
-// 			sessionStorage.removeItem('userInfo');
-// 			next();
-// 		}else if(routePath.indexOf(toPath) == -1){
-// 			next(false)
-// 			if(to.path == '/' && from.path == '/') next({path: '/Home'})
-// 		}else{
-// 			next();
-// 		}
-// 	}
-// })
+router.beforeEach((to, from, next) => {
+	let toPath = to.path;
+	let user = JSON.parse(sessionStorage.getItem('token'));//是否登录
+	if(!user){
+		if(toPath == '/login' || toPath == '/register' || toPath == '/resetPassword'){
+			next();
+			return false;
+		}else{
+			next({path: '/login'})
+		}
+	}else if(user){
+		if(toPath == '/login' || toPath == '/register' || toPath == '/resetPassword'){ //跳转后登出的页面
+			sessionStorage.removeItem('token');
+			sessionStorage.removeItem('userInfo');
+			next();
+		}else if(routePath.indexOf(toPath) == -1){
+			next(false)
+			if(to.path == '/' && from.path == '/') next({path: '/Home'})
+		}else{
+			next();
+		}
+	}
+})
 
 new Vue({
   router,

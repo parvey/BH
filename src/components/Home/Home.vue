@@ -6,17 +6,20 @@
 			<div class="market-theader">名称/最新价/涨跌幅</div>
 			<div class="market-cl"></div>
 			<div class="market-tbody">
-				<vue-scroll :ops="ops" ref="vs" @refresh-start="getData"> 
+				<vue-scroll :ops="ops" ref="vs" @refresh-start="getData" @refresh-before-deactivate="handleBeforeDeactivate"> 
 					<ul>
-						<li v-for="(item,index) in 20" :key="index">
-							<i class="icon" :style="{backgroundImage:'url('+icon+')'}"></i>
+
+						<li v-for="(item,key,index) in tableData" :key="index">
+							<i class="icon" :style="{backgroundImage:'url('+ getIcon(key) +')'}"></i>
 							<div class="coin">
-								<span>YBT</span>/
-								<span class="unit">USDT</span>
+								<span style="text-transform:uppercase">{{key}}</span> /
+								<span class="unit">QC</span>
 							</div>
-							<div class="price">$4.13</div>
-							<div class="trend rise">+1.069%</div>
+							<div class="price">${{item.last}}</div>
+							<div class="trend" :class="item | getTrendClass">{{item | getTrend}}%</div>
 						</li>
+
+
 					</ul>
 				</vue-scroll>
 			</div>
@@ -28,17 +31,14 @@
 </template>
 
 <script>
-	import {getIndexNewsApi,getIndexPricerendApi,getBulletinListApi,indexBannerApi} from '@/api'
-	import {Swiper,SwiperItem} from 'vux'
+	import {getIndexMarketApi} from '@/api'
 	import topHeader from '@/components/public/header.vue'
 	import tabbar from '@/components/public/tabbar.vue'
 
 	export default{
 		components:{
 			topHeader,
-			tabbar,
-			Swiper,
-			SwiperItem
+			tabbar
 		},
 		data(){
 			return{
@@ -49,6 +49,7 @@
 					rtnRouter:''
 				},
 				userInfo:'',
+				tableData:[],
 				ops:{
 					vuescroll:{
 						mode:'slide',
@@ -66,24 +67,36 @@
 							enable:false
 						}
 					},
-					bar:{
+					bar:{		
 						background:'#00000',
 						opacity:0
 					}
 				}
 			}
 		},
+		filters:{
+			getTrend(item){
+				let num = Math.round(((item.last - item.low) / item.last) * 1000) / 1000
+				return num >= 0 ? '+' + num : '-' + num
+			},
+			getTrendClass(item){
+				let num = Math.round(((item.last - item.low) / item.last) * 1000) / 1000
+				return num >= 0 ? 'rise' : 'fall'
+			}
+		},
 		created(){
-			this.userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+			//this.userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
 			this.getData()
 		},
 		methods:{
 			getData(vsInstance, refreshDom, done){
+				console.log('start')
 				if(!done){
 					this.$vux.loading.show({
 					 text: ''
 					})
 				}
+				/*
 				setTimeout(()=>{
 					console.log('1')
 					if(done){
@@ -92,6 +105,29 @@
 						this.$vux.loading.hide()
 					}
 				},1000)
+				*/
+				getIndexMarketApi({}).then((res)=>{
+					if(res.code === 1){
+						this.tableData = res.data.list
+						if(done){
+							setTimeout(()=>{
+								done()
+							},500)
+						}else{
+							this.$vux.loading.hide()
+						}
+					}
+				}).catch(()=>{
+
+				})
+			},
+			handleBeforeDeactivate(vm, refreshDom, done){
+				setTimeout(() => {
+					done();
+				},500);
+			},
+			getIcon(name){
+				return coinIcon(name)
 			}
 		},
 		mounted(){

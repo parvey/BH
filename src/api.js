@@ -7,6 +7,8 @@ import qs from 'qs'
 //export const API_ROOT = 'https://api.big-player.co/api/'
 export const API_ROOT = 'http://bh.procase.wiki/api/'
 
+//export const API_ROOT = 'bh_api/'
+
 
 /*-- 通用 --*/
 
@@ -135,3 +137,7 @@ export const reserveApi = params => { return axios.post( API_ROOT + 'reserve/', 
 /*--游戏--*/
 //列表
 export const getGameListApi = params => { return axios.post( API_ROOT + 'game/', qs.stringify(params));};
+
+//首页行情
+//export const getIndexMarketApi = params => { return axios.post( API_ROOT + 'index/market/', qs.stringify(params));};
+export const getIndexMarketApi = params => { return axios.get( API_ROOT + 'index/market/'); };

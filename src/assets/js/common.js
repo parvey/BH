@@ -43,6 +43,10 @@ export function coinIcon(name){
 		{
 			name:'zb',
 			icon:require('@/assets/images/coin/zb.png')
+		},
+		{
+			name:'bh',
+			icon:require('@/assets/images/coin/bh.png')
 		}
 	]
 	let coinObj = coinList.find((item)=>{

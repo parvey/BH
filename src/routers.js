@@ -43,6 +43,11 @@ let routes = [
 		path:'/myCard',
 		name:'持有卡片',
 		component: (resolve) => require(['./components/Assets/myCard.vue'], resolve)
+	},
+	{
+		path:'/bao',
+		name:'生息宝',
+		component: (resolve) => require(['./components/Assets/bao.vue'], resolve)
 	}
   ]
 

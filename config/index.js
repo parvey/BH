@@ -29,11 +29,11 @@ module.exports = {
     host: '0.0.0.0',
     port:9999,
     proxyTable:{
-        '/XQ':{
-          target:"http://193.112.6.11:81/",
+        '/bh_api':{
+          target:"http://bh.procase.wiki/api/",
           changeOrigin:true,
           pathRewrite:{
-            '^/XQ':'http://193.112.6.11:81/'
+            '^/bh_api':'http://bh.procase.wiki/api/'
           }
         }
     },

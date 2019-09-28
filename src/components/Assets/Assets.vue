@@ -131,7 +131,7 @@
 					{
 						name:'生息宝',
 						icon:require('@/assets/images/content/assets-3.png'),
-						path:''
+						path:'/bao'
 					},
 					{
 						name:'资产业绩',

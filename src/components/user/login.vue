@@ -98,12 +98,12 @@
 							sessionStorage.setItem('token', JSON.stringify(res.data.utoken));
 							this.getUserInfo(res.data.utoken)
 						}else{
-							this.$message.error(res.message)
+							this.$vux.toast.text(res.message)
 							this.loading = false;
 						}
 					}).catch(()=>{this.loading = false;})
 				}else{
-					this.$message.error(this.errorMsg)
+					this.$vux.toast.text(this.errorMsg)
 				}
 			},
 			getUserInfo(token){
@@ -111,9 +111,9 @@
 				}).then((res)=>{
 					if(res.code == 1){
 						sessionStorage.setItem('userInfo', JSON.stringify(res.data));
-						router.push({path:'/Home'});
+						router.push({path:'/home'});
 					}else{
-						this.$message.error('请您稍后登录！');
+						this.$vux.toast.text('请您稍后登录！')
 						this.loading = false;
 					}
 				}).catch(()=>{})
