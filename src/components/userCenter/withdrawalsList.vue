@@ -79,10 +79,10 @@
 					withdraw_id:this.withdraw_id
 				}).then((res)=>{
 					if(res.code === 1){
-						this.$message.success(res.message);
+						this.$vux.toast.text(res.message);
 						this.fundWithdrawRecord()
 					}else{
-						this.$message.error(res.message);
+						this.$vux.toast.text(res.message);
 					}
 				}).catch(()=>{
 

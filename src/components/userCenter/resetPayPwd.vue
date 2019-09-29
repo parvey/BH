@@ -38,7 +38,7 @@
 				topHeader:{
 					title:'修改支付密码',
 					isReturn:true,
-					rtnRouter:'/setting'
+					rtnRouter:'/userCenter'
 				},
 				userInfo:'',
 				cert:{
@@ -60,7 +60,7 @@
             handleClickSub(){
 				//验证是否输入
 				if(!this.$refs['pwd','new_pwd','c_new_pwd'].valid){
-					this.$message.error('请输入密码')
+					this.$vux.toast.text('请输入密码')
 				}else{
 					this.loading = true;
 					userChangepaypasswordApi({
@@ -69,9 +69,9 @@
 						c_new_pwd:this.$getCode('t='+new Date().getTime()+'&p='+this.cert.c_new_pwd)
 					}).then((res)=>{
 						if(res.code == 1){
-							this.$message.success('支付密码修改成功！');
+							this.$vux.toast.text('支付密码修改成功！');
 						}else{
-							this.$message.error(res.message)
+							this.$vux.toast.text(res.message)
 						}
 						this.loading = false;
 					}).catch(()=>{

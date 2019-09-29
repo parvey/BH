@@ -55,16 +55,16 @@
 			copy(){
 				var clipboard = new Clipboard('.c5 .btn');
 				clipboard.on('success',e=>{
-					this.$message.success('复制成功');
+					this.$vux.toast.text('复制成功');
 					clipboard.destroy();
 				})
 				clipboard.on('error',e=>{
-					this.$message.error('请手动复制');
+					this.$vux.toast.text('请手动复制');
 					clipboard.destroy();
 				})
 			},
 			downloadFile() { 
-				this.$message.success('请长按二维码保存图片')
+				this.$vux.toast.text('请长按二维码保存图片')
 				/*
 				//下载base64图片
 				let content = document.getElementById('qrcode').getElementsByTagName('img')[0].src

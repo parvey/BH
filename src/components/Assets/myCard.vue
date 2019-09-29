@@ -3,32 +3,24 @@
 		<topHeader ref="topHeader" :data="topHeader"></topHeader>
 		
 		<div class="scroller" ref="scroller">
-			<vue-scroll :ops="ops" ref="vs" @refresh-start="getData"> 
-				
-				<ul class="game-list clearfix">
-					<li v-for="item in 10" :key="item">
-						<img :src="ceshi.pic" alt="" class="pic">
-						<div class="b">
-							<span class="t">价格：</span>
-							<span class="c">1000矿石</span>
-							<!-- <span>{{item.price}}</span> -->
+			<vue-scroll :ops="ops" ref="vs" @refresh-start="getData" @refresh-before-deactivate="handleBeforeDeactivate">
+
+				<ul class="myRec-list myProject-list">
+					<li v-for="(item,index) in dataList" :key="index">
+						<img :src="item.icon" class="icon" :alt="item.name"/>
+						<div class="top">
+							<span class="account">{{item.name}}</span>	
+							<span style="float:right">当前收益：<span style="color:red">{{item.income_sum}}</span></span>				
 						</div>
-						<div class="b">
-							<span class="t">剩余数量：</span>
-							<span class="c">10</span>
-							<!-- <span>{{item.surplus}}</span> -->
+						<div class="list">
+							<span>价格：{{item.price}}</span>
+							<span>每日收益：{{item.income}}</span>					
 						</div>
-						<div class="b">
-							<span class="t">周期：</span>
-							<span class="c">7天</span>
-							<!-- <span>{{item.cycle}}</span> -->
+						<div class="type">
+							<p>购买时间：{{item.buy_time}}</p>
+							<p>过期时间：{{item.expire_time}}</p>
 						</div>
-						<div class="b">
-							<span class="t">奖励：</span>
-							<span class="c">15%</span>
-							<!-- <span>{{item.income}}</span> -->
-						</div>
-						<div class="btn buy">生息中...</div>						
+						<x-button class="login-btn">生息中...</x-button>
 					</li>
 				</ul>
 
@@ -39,11 +31,13 @@
 </template>
 
 <script>
-	import {} from '@/api'
+	import {getOrderRecordApi} from '@/api'
+	import {XButton} from 'vux'
 	import topHeader from '@/components/public/header.vue'
 	export default{
 		components:{
-			topHeader
+			topHeader,
+			XButton
 		},
 		data(){
 			return{
@@ -52,6 +46,7 @@
 					isReturn:true,
 					rtnRouter:'/assets'
 				},
+				dataList:[],
 				ops:{
 					vuescroll:{
 						mode:'slide',
@@ -80,6 +75,7 @@
 			}
 		},
 		created(){
+			this.getData()
 		},
 		methods:{
 			//给scroll赋值高度
@@ -89,19 +85,29 @@
 	            scroller.style.height = (bodyHeight-46)+"px";
 			},
 			getData(vsInstance, refreshDom, done){
-				if(!done){
-					this.$vux.loading.show({
-					 text: ''
-					})
-				}
-				setTimeout(()=>{
-					console.log('1')
-					if(done){
-						done()
-					}else{
-						this.$vux.loading.hide()
+				if(!done) this.$vux.loading.show()
+				getOrderRecordApi({
+
+				}).then((res)=>{
+					if(res.code === 1){
+						this.dataList = res.data.list
+						setTimeout(()=>{
+							console.log('1')
+							if(done){
+								done()
+							}else{
+								this.$vux.loading.hide()
+							}
+						},500)
 					}
-				},1000)
+				}).catch(()=>{
+
+				})
+			},
+			handleBeforeDeactivate(vm, refreshDom, done){
+				setTimeout(() => {
+					done();
+				},500);
 			}
 		},
 		mounted(){
@@ -111,7 +117,7 @@
 		}
 	};
 </script>
-<style lang="less">
+<style lang="less" scoped>
 	.game-list{
 		padding:0 3%;
 		li{
@@ -123,12 +129,14 @@
 			position:relative;
 			margin:10px 1.5% 0;
 			float:left;
+			.name{font-size:.22rem;position:absolute;left:.2rem;top:1.38rem;}
 			.pic{
 				display:block;
 				width:1.6rem;
 				height:1.6rem;
 				object-fit:cover;
-				margin:0 auto;
+				border-radius:100%;
+				margin:0 auto .1rem;
 			}
 			.b{
 				padding:0 .2rem;
@@ -151,6 +159,4 @@
 			.btn.buy{background:#e50007;}
 		}
 	}
-
-
 </style>

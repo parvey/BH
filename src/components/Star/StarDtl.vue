@@ -75,10 +75,10 @@
 					project_id:this.item.project_id
 				}).then((res)=>{
 					if(res.code == 1){
-						this.$message.success('恭喜您，购买成功！');
+						this.$vux.toast.text('恭喜您，购买成功！');
 						this.getProject();
 					}else{
-						this.$message.error(res.message)
+						this.$vux.toast.text(res.message)
 					}
 					this.getUserInfo();
 					this.loading = false
@@ -111,10 +111,10 @@
 					project_id:this.item.project_id
 				}).then((res)=>{
 					if(res.code == 1){
-						this.$message.success('恭喜您，预约成功！');
+						this.$vux.toast.text('恭喜您，预约成功！');
 						this.getProject();
 					}else{
-						this.$message.error(res.message)
+						this.$vux.toast.text(res.message)
 					}
 					this.getUserInfo();
 					this.loading = false

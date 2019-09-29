@@ -7,7 +7,7 @@ import axios from 'axios'
 import qs from 'qs'
 import store from './store/store'
 import './assets/css/common.less'
-import {LoadingPlugin,AlertPlugin,ToastPlugin} from 'vux' //vux全局组件
+import {LoadingPlugin,AlertPlugin,ToastPlugin,ConfirmPlugin} from 'vux' //vux全局组件
 //import ElementUI from 'element-ui'; //element-ui
 //import 'element-ui/lib/theme-chalk/index.css';
 import JsEncrypt from 'jsencrypt'; //RSA加密
@@ -24,6 +24,7 @@ Vue.use(Vuex); //引入状态管理
 Vue.use(AlertPlugin);
 Vue.use(ToastPlugin);
 Vue.use(LoadingPlugin);
+Vue.use(ConfirmPlugin);
 
 Vue.use(vuescroll)
 

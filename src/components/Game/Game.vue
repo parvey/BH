@@ -7,6 +7,7 @@
 				<ul class="game-list clearfix">
 					<li v-for="(item,index) in dataList" :key="index">
 						<img :src="item.icon" alt="" class="pic">
+						<div class="name">{{item.name}}</div>
 						<div class="b">
 							<span class="t">价格：</span>
 							<span class="c">{{item.price + ' QC'}}</span>
@@ -34,7 +35,7 @@
 </template>
 
 <script>
-	import {getProjectIndexApi,getProjectReserveApi} from '@/api'
+	import {getProjectIndexApi,getProjectReserveApi,orderBuyApi} from '@/api'
 	import {} from 'vux'
 	import topHeader from '@/components/public/header.vue'
 	import tabbar from '@/components/public/tabbar.vue'
@@ -114,11 +115,11 @@
 	            scroller.style.height = (bodyHeight-99)+"px";
 			},
 			getData(vsInstance, refreshDom, done){
-				if(!done){
-					this.$vux.loading.show({
-					 text: ''
-					})
-				}
+				// if(!done){
+				// 	this.$vux.loading.show({
+				// 	 text: ''
+				// 	})
+				// }
 				getProjectIndexApi({
 
 				}).then((res)=>{
@@ -128,8 +129,6 @@
 							setTimeout(()=>{
 								done()
 							},500)
-						}else{
-							this.$vux.loading.hide()
 						}
 					}
 				}).catch(()=>{
@@ -155,18 +154,40 @@
 			},
 			handleClickAction(item){
 				if(item.status == 0){
-					getProjectReserveApi({
-						project_id:item.project_id
-					}).then((res)=>{
-						if(res.code == 1){
-							this.$vux.toast.text('预约成功')
-							this.$refs['vs'].triggerRefreshOrLoad('refresh');
-						}else{
-							this.$vux.toast.text(res.message)
-						}
-					}).catch(()=>{
+					//预约
+					if(isCert()){
+						getProjectReserveApi({
+							project_id:item.project_id
+						}).then((res)=>{
+							if(res.code == 1){
+								this.$vux.toast.text('预约成功')
+								this.getData()
+							}else{
+								this.$vux.toast.text(res.message)
+							}
+						}).catch(()=>{
+							
+						})
+					}
+				}else if(item.status == 2){
+					if(isCert()){
+						this.$vux.loading.show()
 						
-					})
+						orderBuyApi({
+							project_id:item.project_id
+						}).then((res)=>{
+							if(res.code == 1){
+								this.$vux.toast.text('恭喜您，领养成功')
+								this.getData()
+							}else{
+								this.$vux.toast.text(res.message)
+							}
+							this.$vux.loading.hide()
+						}).catch(()=>{
+							this.$vux.loading.hide()
+						})
+
+					}
 				}
 			}
 		},
@@ -177,7 +198,7 @@
 		}
 	};
 </script>
-<style lang="less">
+<style lang="less" scoped>
 	.game-list{
 		padding:0 3%;
 		li{
@@ -189,12 +210,14 @@
 			position:relative;
 			margin:10px 1.5% 0;
 			float:left;
+			.name{font-size:.22rem;position:absolute;left:.2rem;top:1.38rem;}
 			.pic{
 				display:block;
 				width:1.6rem;
 				height:1.6rem;
 				object-fit:cover;
-				margin:0 auto;
+				border-radius:100%;
+				margin:0 auto .1rem;
 			}
 			.b{
 				padding:0 .2rem;
@@ -217,6 +240,4 @@
 			.btn.buy{background:#e50007;}
 		}
 	}
-
-
 </style>

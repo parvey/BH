@@ -2,7 +2,7 @@
 	<div>
 		<topHeader ref="topHeader" :data="topHeader"></topHeader>
 		<div class="userCert-wrap">
-			<div class="pic-wrap">
+			<!-- <div class="pic-wrap">
 				<div class="type">头像</div>
 				<img :src="cert.avatar" alt="" class="pic" />
 				<el-upload
@@ -12,7 +12,7 @@
                   :before-upload="beforeAvatarUpload">
 				<el-button class="btn-upload"></el-button>
 				</el-upload>
-			</div>
+			</div> -->
 			<group>
 				<x-input type="text" v-model="cert.nickname" placeholder="请输入您的昵称" :show-clear="false" required name="nickname" ref="nickname"></x-input>
 			</group>
@@ -54,9 +54,9 @@
 			return{
 				loading:false,
 				topHeader:{
-					title:'个人信息设置',
+					title:'个人信息',
 					isReturn:true,
-					rtnRouter:'/setting'
+					rtnRouter:'/userCenter'
 				},
 				userInfo:'',
 				cert:{
@@ -75,6 +75,7 @@
 		},
 		created(){
 			this.userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+			console.log(this.userInfo)
 			this.cert.avatar = this.userInfo.avatar;
 			this.cert.nickname = this.userInfo.nickname;
 			//this.cert.province.push(this.userInfo.address_province)
@@ -92,10 +93,10 @@
 		        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
 		        const isLt2M = file.size / 1024 / 1024 < 10;
 		        if (!isJPG) {
-		          self.$message.error('上传头像图片只能是图片格式!');
+		          self.$vux.toast.text('上传头像图片只能是图片格式!');
 		        }
 		        if (!isLt2M) {
-		          self.$message.error('上传图片大小不能超过 10MB!');
+		          self.$vux.toast.text('上传图片大小不能超过 10MB!');
 		        }
 		        if(isJPG && isLt2M){
 				    let formdata = new FormData();
@@ -112,7 +113,7 @@
             handleClickSub(){
 				this.loading = true;
 				userProfileApi({
-					avatar:this.cert.avatar,
+					//avatar:this.cert.avatar,
 					nickname:this.cert.nickname,
 					//address_province:this.cert.province[0],
 					//address_city:this.cert.province[1],
@@ -120,10 +121,10 @@
 					address_mobile:this.cert.address_mobile
 				}).then((res)=>{
 					if(res.code == 1){
-						this.$message.success('资料修改成功');
+						this.$vux.toast.text('资料修改成功');
 						this.getUserInfo();
 					}else{
-						this.$message.error(res.message)
+						this.$vux.toast.text(res.message)
 					}
 					this.loading = false;
 				}).catch(()=>{

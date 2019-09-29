@@ -78,10 +78,10 @@
 					reserve_id:this.cancelId
 				}).then((res)=>{
 					if(res.code === 1){
-						this.$message.success(res.message)
+						this.$vux.toast.text(res.message)
 						this.reserveRecord()
 					}else{
-						this.$message.error(res.message)
+						this.$vux.toast.text(res.message)
 					}
 				}).catch(()=>{
 					

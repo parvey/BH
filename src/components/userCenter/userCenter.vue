@@ -4,15 +4,22 @@
 		
 		<div class="userCenter-top">
 			<i class="icon"></i>
-			<div class="nickName">+8613537721129</div>
-			<div class="ID">BH ID:684840474</div>
+			<div class="nickName">{{userInfo.name == "" ? '匿名' : userInfo.name}}</div>
+			<div class="ID">{{userInfo.mobile}}</div>
+			<div class="go" @click="goPath('/userInfo')"></div>
 		</div>
-
-		<ul class="userCenter-nav">
-			<li>
-				<i></i>
-			</li>
-		</ul>
+		
+		<div class="userCenter-nav" v-for="(item,index) in navList2" :key="index">
+			<div class="top">
+				<span class="c" v-if="item.name != ''">{{item.name}}</span>
+			</div>
+			<ul v-if="item.child.length > 0">
+				<li v-for="(item2,index2) in item.child" :key="index2" @click="goPath(item2.path)">
+					<i :style="{backgroundImage:'url('+item2.icon+')'}"></i>
+					<span class="name">{{item2.name}}</span>
+				</li>
+			</ul>
+		</div>
 		
 
 
@@ -138,6 +145,48 @@
 					// 	path:'/teamProfit'
 					// }
 				],
+				navList2:[
+					{
+						name:'',
+						child:[
+							{
+								name:'邀请码',
+								path:'/myInvitCode',
+								icon:require('@/assets/images/content/userCenter/nav-1.png')
+							},
+							{
+								name:'在线客服',
+								path:'/custSrvCenter',
+								icon:require('@/assets/images/content/userCenter/nav-2.png')
+							}
+						]
+					},
+					{
+						name:'密码设置',
+						child:[
+							{
+								name:'登录密码',
+								path:'/resetPwd',
+								icon:require('@/assets/images/content/userCenter/nav-3.png')
+							},
+							{
+								name:'交易密码',
+								path:'/resetPayPwd',
+								icon:require('@/assets/images/content/userCenter/nav-4.png')
+							}
+						]
+					},
+					{
+						name:'安全设置',
+						child:[
+							{
+								name:'实名认证',
+								path:'/userCert',
+								icon:require('@/assets/images/content/userCenter/nav-5.png')
+							}
+						]
+					}
+				],
 				isLoginOut:false,
 				isWillActivate:false,
 				eth:''
@@ -161,11 +210,11 @@
 			copy(){
 				var clipboard = new Clipboard('.usercenter-wallet .adress');
 				clipboard.on('success',e=>{
-					this.$message.success('复制成功');
+					this.$vux.toast.text('复制成功');
 					clipboard.destroy();
 				})
 				clipboard.on('error',e=>{
-					this.$message.error('请手动复制');
+					this.$vux.toast.text('请手动复制');
 					clipboard.destroy();
 				})
 			},
@@ -185,10 +234,10 @@
 			activateChild(){
 				activateChildApi({}).then((res)=>{
 					if(res.code === 1){
-						this.$message.success('激活成功');
+						this.$vux.toast.text('激活成功');
 						this.getUserChild();
 					}else{
-						this.$message.error(res.message)
+						this.$vux.toast.text(res.message)
 					}
 				}).catch(()=>{})
 			},
@@ -200,20 +249,50 @@
 				}).catch(()=>{
 
 				})
+			},
+			goPath(path){
+				this.$router.push({path:path})
 			}
 		}
 	};
 </script>
 <style lang="less">
-	.userCenter-top{padding:.54rem 0 .54rem .35rem;background:#fff;position:relative;overflow:hidden;}
-	.userCenter-top .icon{display:block;width:.9rem;height:.9rem;border-radius:100%;background:url('../../assets/images/logo.png') no-repeat center center / cover;float:left;margin:0 .27rem 0 0;}
-	.userCenter-top .nickName{line-height:.37rem;font-weight:600;font-size:.26rem;color:#000;margin:.13rem 0 0 0;}
-	.userCenter-top .ID{line-height:.32rem;color:#817f80;font-size:.22rem;}
+	.userCenter-top{
+		padding:.54rem 0 .54rem .35rem;background:#fff;position:relative;overflow:hidden;
+		.icon{display:block;width:.9rem;height:.9rem;border-radius:100%;background:url('../../assets/images/logo.png') no-repeat center center / cover;float:left;margin:0 .27rem 0 0;}
+		.nickName{line-height:.37rem;font-weight:600;font-size:.26rem;color:#000;margin:.13rem 0 0 0;}
+		.ID{line-height:.32rem;color:#817f80;font-size:.22rem;}
+		.go{display:block;height:100%;width:1rem;background:url(../../assets/images/icon/icon-go2.png) no-repeat right center / .14rem auto;position:absolute;right:.26rem;top:0px;}
+	}
 
 	.userCenter-nav{
-		li{
-			i{
-				display:block;width:.38rem;height:.38rem;background:url(../../assets/images/test/nav.png) no-repeat center center / cover;
+		// border-top:.24rem solid #f2f2f2;
+		.top{
+			padding:.13rem 0 .13rem .36rem;
+			background:#f2f2f2;
+			.c{display:block;line-height:.4rem;height:.4rem;color:#797979;font-size:.28rem;}
+		}
+		ul{
+			padding:0 0 0 .4rem;
+			li{
+				display:block;
+				padding:0 0 0 .8rem;
+				border-top:1px solid #f2f2f2;
+				position:relative;
+				&:first-child{border-top:0px;}
+				i{
+					display:block;
+					width:.38rem;
+					height:.38rem;
+					//background:url(../../assets/images/test/nav.png) no-repeat center center / cover;
+					background-repeat:no-repeat;
+					background-size:cover;
+					background-position:center center;
+					position:absolute;
+					left:0px;
+					top:.24rem;
+				}
+				.name{display:block;color:#000;font-size:.26rem;line-height:.88rem;}
 			}
 		}
 	}

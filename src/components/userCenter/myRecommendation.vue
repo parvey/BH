@@ -77,10 +77,10 @@
 					child_id:this.activateChildId
 				}).then((res)=>{
 					if(res.code === 1){
-						this.$message.success('激活成功');
+						this.$vux.toast.text('激活成功');
 						this.getUserChild();
 					}else{
-						this.$message.error(res.msg)
+						this.$vux.toast.text(res.msg)
 					}
 				}).catch(()=>{})
 			}

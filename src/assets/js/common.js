@@ -1,3 +1,9 @@
+import Vue from 'vue'
+import store from '@/store/store'
+import { ToastPlugin } from 'vux'
+Vue.use(ToastPlugin)
+let vm = new Vue()
+
 export function coinIcon(name){
 	let coinList = [
 		{
@@ -54,4 +60,20 @@ export function coinIcon(name){
 	})
 	return coinObj ? coinObj.icon : ''
 }
+
+
+export function isCert(){
+	let is_auth = JSON.parse(sessionStorage.getItem('userInfo')).is_auth
+	if(is_auth == 0){
+		store.state.isCert = !store.state.isCert;
+		return false
+	}else if(is_auth == -1){
+		vm.$vux.toast.text('实名认证审核中')
+		return false
+	}else if(is_auth == 1){
+		return true
+	}
+}
+
 window.coinIcon = coinIcon
+window.isCert = isCert

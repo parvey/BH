@@ -48,8 +48,37 @@ let routes = [
 		path:'/bao',
 		name:'生息宝',
 		component: (resolve) => require(['./components/Assets/bao.vue'], resolve)
+	},
+	{
+		path:'/userCert',
+		name:'实名认证',
+		component: (resolve) => require(['./components/userCenter/userCert.vue'], resolve)
+	},
+	{
+		path:'/userInfo',
+		name:'个人信息',
+		component: (resolve) => require(['./components/userCenter/userInfo.vue'], resolve)
+	},
+	{
+		path:'/myInvitCode',
+		name:'邀请码',
+		component: (resolve) => require(['./components/userCenter/myInvitCode.vue'], resolve)
+	},
+	{
+		path:'/custSrvCenter',
+		name:'在线客服',
+		component: (resolve) => require(['./components/userCenter/custSrvCenter.vue'], resolve)
+	},
+	{
+		path:'/resetPwd',
+		name:'登录密码',
+		component: (resolve) => require(['./components/userCenter/resetPwd.vue'], resolve)
+	},
+	{
+		path:'/resetPayPwd',
+		name:'交易密码',
+		component: (resolve) => require(['./components/userCenter/resetPayPwd.vue'], resolve)
 	}
   ]
 
 export default routes;
-	

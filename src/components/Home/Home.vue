@@ -90,12 +90,6 @@
 		},
 		methods:{
 			getData(vsInstance, refreshDom, done){
-				console.log('start')
-				if(!done){
-					this.$vux.loading.show({
-					 text: ''
-					})
-				}
 				/*
 				setTimeout(()=>{
 					console.log('1')
@@ -113,8 +107,6 @@
 							setTimeout(()=>{
 								done()
 							},500)
-						}else{
-							this.$vux.loading.hide()
 						}
 					}
 				}).catch(()=>{

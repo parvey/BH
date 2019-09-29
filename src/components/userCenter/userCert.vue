@@ -2,10 +2,10 @@
 	<div>
 		<topHeader ref="topHeader" :data="topHeader"></topHeader>
 		<div class="cert-status">
-			<div v-if="userInfo.is_auth == -2"><i class="el-icon-error" style="color:red"></i>您的实名认证失败！</div>
-			<div v-else-if="userInfo.is_auth == 0"><i class="el-icon-warning" style="color:red"></i>您暂未实名认证！</div>
-			<div v-else-if="userInfo.is_auth == -1"><i class="el-icon-info" style="color:#10AEFF"></i>实名认证审核中！</div>
-			<div v-else><i class="el-icon-success" style="color:#098807"></i>您已实名认证成功！</div>
+			<div v-if="userInfo.is_auth == -2"><icon type="cancel"></icon>您的实名认证失败！</div>
+			<div v-else-if="userInfo.is_auth == 0"><icon type="warn"></icon>您暂未实名认证！</div>
+			<div v-else-if="userInfo.is_auth == -1"><icon type="info"></icon>实名认证审核中！</div>
+			<div v-else><icon type="success"></icon>您已实名认证成功！</div>
 		</div>
 
 		<div class="userCert-wrap">
@@ -77,7 +77,7 @@
 
 <script>
 	import {API_ROOT,sysUploadApi,userAuthApi,getUserInfoApi} from '@/api'
-	import {Group,GroupTitle,XInput,XButton} from 'vux'
+	import {Group,GroupTitle,XInput,XButton,Icon} from 'vux'
 	import topHeader from '@/components/public/header.vue'
 
 	export default{
@@ -86,7 +86,8 @@
 			Group,
 			GroupTitle,
 			XInput,
-			XButton
+			XButton,
+			Icon
 		},
 		data(){
 			return{
@@ -94,7 +95,7 @@
 				topHeader:{
 					title:'实名认证',
 					isReturn:true,
-					rtnRouter:'/setting'
+					rtnRouter:'/userCenter'
 				},
 				userInfo:'',
 				cert:{
@@ -113,6 +114,7 @@
 			this.userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
 			this.cert.name = this.userInfo.name;
 			this.cert.id_num = this.userInfo.id_num;
+			this.getUserInfo()
 			//this.cert.bank_card = this.userInfo.bank_card;
 			//this.cert.bank_name = this.userInfo.bank_name;
 			//this.cert.wxpay_img = this.userInfo.wxpay_img;
@@ -125,10 +127,10 @@
 		        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
 		        const isLt2M = file.size / 1024 / 1024 < 10;
 		        if (!isJPG) {
-		          self.$message.error('上传图片只能是图片格式!');
+		          self.$vux.toast.text('上传图片只能是图片格式!');
 		        }
 		        if (!isLt2M) {
-		          self.$message.error('上传图片大小不能超过 10MB!');
+		          self.$vux.toast.text('上传图片大小不能超过 10MB!');
 		        }
 		        if(isJPG && isLt2M){
 				    let formdata = new FormData();
@@ -147,10 +149,10 @@
 		        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
 		        const isLt2M = file.size / 1024 / 1024 < 10;
 		        if (!isJPG) {
-		          self.$message.error('上传图片只能是 JPG 格式!');
+		          self.$vux.toast.text('上传图片只能是 JPG 格式!');
 		        }
 		        if (!isLt2M) {
-		          self.$message.error('上传图片大小不能超过 10MB!');
+		          self.$vux.toast.text('上传图片大小不能超过 10MB!');
 		        }
 		        if(isJPG && isLt2M){
 				    let formdata = new FormData();
@@ -185,10 +187,10 @@
 						//alipay_img:this.cert.alipay_img
 					}).then((res)=>{
 						if(res.code == 1){
-							this.$message.success('资料已提交，审核中！');
+							this.$vux.toast.text('资料已提交，审核中！');
 							this.getUserInfo();
 						}else{
-							this.$message.error(res.message)
+							this.$vux.toast.text(res.message)
 						}
 						this.loading = false;
 					}).catch(()=>{
@@ -197,7 +199,7 @@
 
 				}else{
 					//this.isError = true;
-					this.$message.error(this.errorMsg)
+					this.$vux.toast.text(this.errorMsg)
 				}
             },
 			getUserInfo(token){
@@ -205,6 +207,9 @@
 				}).then((res)=>{
 					if(res.code == 1){
 						sessionStorage.setItem('userInfo', JSON.stringify(res.data));
+						this.userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+						this.cert.name = this.userInfo.name;
+						this.cert.id_num = this.userInfo.id_num;
 					}
 				}).catch(()=>{})
 			},
@@ -213,10 +218,10 @@
 		        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
 		        const isLt2M = file.size / 1024 / 1024 < 10;
 		        if (!isJPG) {
-		          self.$message.error('上传图片只能是 JPG 格式!');
+		          self.$vux.toast.text('上传图片只能是 JPG 格式!');
 		        }
 		        if (!isLt2M) {
-		          self.$message.error('上传图片大小不能超过 10MB!');
+		          self.$vux.toast.text('上传图片大小不能超过 10MB!');
 		        }
 		        if(isJPG && isLt2M){
 				    let formdata = new FormData();
@@ -234,10 +239,10 @@
 		        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
 		        const isLt2M = file.size / 1024 / 1024 < 10;
 		        if (!isJPG) {
-		          self.$message.error('上传图片只能是 JPG 格式!');
+		          self.$vux.toast.text('上传图片只能是 JPG 格式!');
 		        }
 		        if (!isLt2M) {
-		          self.$message.error('上传图片大小不能超过 10MB!');
+		          self.$vux.toast.text('上传图片大小不能超过 10MB!');
 		        }
 		        if(isJPG && isLt2M){
 				    let formdata = new FormData();

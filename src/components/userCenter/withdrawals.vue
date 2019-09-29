@@ -77,16 +77,16 @@
 		methods:{
 			handleClickSub(){
 				if(this.amount === ''){
-					this.$message.error('请输入提现数量')
+					this.$vux.toast.text('请输入提现数量')
 					return false;
 				}else if(this.amount > this.userInfo.usdt_amount){
-					this.$message.error('您的余额不足！');
+					this.$vux.toast.text('您的余额不足！');
 					return false;
 				}else if(this.address == ''){
-					this.$message.error('请输入提现地址')
+					this.$vux.toast.text('请输入提现地址')
 					return false;
 				}else if(this.paypwd == ''){
-					this.$message.error('请输入支付密码')
+					this.$vux.toast.text('请输入支付密码')
 					return false;
 				}else{
 					this.isSure = true
@@ -100,10 +100,10 @@
 					paypwd:this.$getCode('t='+new Date().getTime()+'&p='+this.paypwd)
 				}).then((res)=>{
 					if(res.code === 1){
-						this.$message.success(res.message)
+						this.$vux.toast.text(res.message)
 						this.getUserInfo();
 					}else{
-						this.$message.error(res.message)
+						this.$vux.toast.text(res.message)
 					}
 					this.loading = false;
 				}).catch(()=>{

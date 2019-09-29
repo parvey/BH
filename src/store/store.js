@@ -9,6 +9,7 @@ Vue.use(Vuex)
 const state = {
     isUselessRoute:false,//无效链接
     isLoginOut:false,//登录验证已无效
+    isCert:false
 }
 
 // 定义所需的 mutations

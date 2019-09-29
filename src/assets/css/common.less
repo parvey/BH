@@ -115,9 +115,9 @@ html{font-size:100px;}
 /*邀请的星球*/
 .myRec-list{padding:0 .18rem .2rem;}
 .myRec-list li{padding:.1rem .18rem 10px;background:#fff;border-radius:10px;margin:.18rem  0 0 0;}
-.myRec-list li .top{height:40px;line-height:40px;border-bottom:1px solid #c0c0c0;overflow:hidden;}
+.myRec-list li .top{height:40px;line-height:40px;border-bottom:1px solid #f2eded;overflow:hidden;}
 .myRec-list li .top .account{font-weight:600;font-size:15px;}
-.myRec-list li .list{overflow:hidden;padding:5px 0;border-bottom:1px solid #c0c0c0;}
+.myRec-list li .list{overflow:hidden;padding:5px 0;border-bottom:1px solid #f2eded;}
 .myRec-list li .list>span{width:50%;line-height:26px;float:left;}
 .myRec-list li .type{padding:10px 0 0;line-height:30px;text-align:right;overflow:hidden;}
 .myRec-list li .type .register_time{float:left;font-size:12px;}
@@ -147,13 +147,13 @@ html{font-size:100px;}
 .set-nav li:after{content:"";display:block;width:.38rem;height:100%;background:url(../images/icon/icon-go.png) no-repeat center center / .25rem auto;position:absolute;right:.1rem;top:0px;}
 
 /*-- 实名认证 --*/
-.cert-status{text-align:center;color:#fff;font-size:12px;margin:.18rem 0 0 0;}
-.cert-status i{font-size:12px;vertical-align:middle;margin:0 5px 0 0;}
+.cert-status{text-align:center;color:#333;font-size:12px;margin:.18rem 0 0 0;}
+.cert-status i{font-size:14px;vertical-align:text-bottom;margin:0 5px 0 0;position:relative;top:-1px;}
 
 .userCert-wrap{padding:.18rem .18rem 0;}
 .userCert-wrap .weui-cells{background:none !important;}
 .userCert-wrap .weui-cells:before{border-top:0px !important;}
-.userCert-wrap .weui-cells input{font-size:14px !important;color:#fff;}
+.userCert-wrap .weui-cells input{font-size:14px !important;color:#333;}
 .userCert-wrap .pic-wrap{height:1rem;padding:0 .18rem;color:#fff;font-size:14px;background:rgba(255,255,255,0.3);border-radius:5px;position:relative;margin:1.17647059em 0 0 0;}
 .userCert-wrap .pic-wrap .type{line-height:1rem;float:left;}
 .userCert-wrap .pic-wrap .btn-upload{width:100px;height:100%;padding:0px;border:0px;background:url(../images/icon/icon-go2.png) no-repeat 92% center / .1rem auto;position:absolute;right:0px;top:0px;}
@@ -245,10 +245,10 @@ html{font-size:100px;}
 
 .UCform-box .conversion{height:1rem;line-height:1rem;font-size:12px;color:#bababa;position:absolute;right:0px;top:0px;}
 
-.weui-label{color:#fff;}
+.weui-label{color:#333;}
 
 //持有玩家
-.myProject-list li{padding-left:100px;position:relative;}
+.myProject-list li{padding-left:100px;box-shadow:0px 0px 2px rgba(0,0,0,.2);position:relative;}
 .myProject-list li .icon{display:block;width:80px;height:auto;position:absolute;left:10px;top:50%;transform:translateY(-50%);}
 .myProject-list li .type{text-align:left;font-size:12px;line-height:16px;}
 .myProject-list li .list{padding:5px 0;}
@@ -290,5 +290,9 @@ html{font-size:100px;}
 
 .no-data-text{display:none !important}
 
+.__vuescroll .__refresh, 
+.__vuescroll .__load{font-size:12px !important;}
+.__vuescroll .__refresh svg, 
+.__vuescroll .__load svg{width:16px !important;height:16px !important;margin:0 5px 0 0 !important;}
 .__vuescroll .__refresh svg.start{margin-right:0px !important}
-.__vuescroll .__load svg{vertical-align:middle !important;}
+.__vuescroll .__load svg{vertical-align:middle !important;position:relative;top:-1px;}

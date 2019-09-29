@@ -28,7 +28,7 @@
 					{
 						id:'0',
 						name:'行情',
-						path:'/Home',
+						path:'/home',
 						icon:require('@/assets/images/tabbar/home-1.png'),
 						curIcon:require('@/assets/images/tabbar/home-2.png'),
 					},

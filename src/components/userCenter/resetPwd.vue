@@ -40,7 +40,7 @@
 				topHeader:{
 					title:'修改登录密码',
 					isReturn:true,
-					rtnRouter:'/setting'
+					rtnRouter:'/userCenter'
 				},
 				userInfo:'',
 				cert:{
@@ -62,7 +62,7 @@
             handleClickSub(){
 				//验证是否输入
 				if(!this.$refs['pwd','new_pwd','c_new_pwd'].valid){
-					this.$message.error('请输入密码')
+					this.$vux.toast.text('请输入密码')
 				}else{
 					this.loading = true;
 					userChangepasswordApi({
@@ -71,10 +71,10 @@
 						c_new_pwd:this.$getCode('t='+new Date().getTime()+'&p='+this.cert.c_new_pwd)
 					}).then((res)=>{
 						if(res.code == 1){
-							this.$message.success('密码修改成功，请重新登录');
+							this.$vux.toast.text('密码修改成功，请重新登录');
 							router.push({path:'/login'});
 						}else{
-							this.$message.error(res.message)
+							this.$vux.toast.text(res.message)
 						}
 						this.loading = false;
 					}).catch(()=>{
