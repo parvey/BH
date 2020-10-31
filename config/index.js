@@ -30,10 +30,10 @@ module.exports = {
     port:9999,
     proxyTable:{
         '/bh_api':{
-          target:"http://bh.procase.wiki/api/",
+          target:"http://test.xffeng.com/api/",
           changeOrigin:true,
           pathRewrite:{
-            '^/bh_api':'http://bh.procase.wiki/api/'
+            '^/bh_api':'http://test.xffeng.com/api/'
           }
         }
     },

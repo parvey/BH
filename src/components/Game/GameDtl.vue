@@ -18,7 +18,7 @@
 		data(){
 			return{
 				topHeader:{
-					title:'游戏',
+					title:'矿机',
 					isReturn:true,
 					rtnRouter:'/Game'
 				},

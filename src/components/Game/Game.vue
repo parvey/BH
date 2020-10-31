@@ -48,7 +48,7 @@
 		data(){
 			return{
 				topHeader:{
-					title:'游戏',
+					title:'矿机',
 					isReturn:false,
 					rtnRouter:''
 				},
@@ -88,17 +88,17 @@
 					},
 					{
 						id:2,
-						name:'领养',
+						name:'购买',
 						class:'buy'
 					},
 					{
 						id:3,
-						name:'已领养',
+						name:'已购买',
 						class:'disabled'
 					},
 					{
 						id:4,
-						name:'繁殖中',
+						name:'挖矿中',
 						class:'disabled'
 					}
 				]
@@ -177,7 +177,7 @@
 							project_id:item.project_id
 						}).then((res)=>{
 							if(res.code == 1){
-								this.$vux.toast.text('恭喜您，领养成功')
+								this.$vux.toast.text('恭喜您，购买成功')
 								this.getData()
 							}else{
 								this.$vux.toast.text(res.message)

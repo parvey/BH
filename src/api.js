@@ -5,8 +5,10 @@ import qs from 'qs'
 //export const API_ROOT = 'XQ/api/'
 //export const API_ROOT = 'http://uat.api.big-player.co/api/'
 //export const API_ROOT = 'https://api.big-player.co/api/'
-export const API_ROOT = 'http://bh.procase.wiki/api/'
+//export const API_ROOT = 'http://bh.procase.wiki/api/'
+//export const API_ROOT = 'http://47.242.86.6/api/'
 
+export const API_ROOT = 'http://test.xffeng.com/api/'
 //export const API_ROOT = 'bh_api/'
 
 

@@ -41,7 +41,7 @@
 					},
 					{
 						id:'2',
-						name:'游戏',
+						name:'矿机',
 						path:'/game',
 						icon:require('@/assets/images/tabbar/game-1.png'),
 						curIcon:require('@/assets/images/tabbar/game-2.png'),
